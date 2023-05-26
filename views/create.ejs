@@ -1,0 +1,22 @@
+<%- include("template/header", {tituloWeb:"create"}) %>
+
+<div class="container">
+  <h1>Create</h1>
+  <form action="/api/pets/create" method="POST">
+    <input
+      type="text"
+      placeholder="Add name"
+      class="form-control my-2"
+      name="name"
+    />
+    <input
+      type="text"
+      placeholder="Add description"
+      class="form-control my-2"
+      name="description"
+    />
+    <button class="btn btn-success w-100" type="submit">Add</button>
+  </form>
+</div>
+
+<%- include("template/footer") %>

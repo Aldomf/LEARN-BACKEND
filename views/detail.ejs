@@ -1,0 +1,91 @@
+<%- include("template/header", {tituloWeb:"Detail of pet"}) %>
+
+<div class="container">
+  <h1>Detail</h1>
+  <% if (error) { %>
+  <p><%= message %></p>
+  <a href="/api/pets" class="btn btn-dark w-100">Back to Pets</a>
+  <% } %> <% if (!error) { %>
+
+  <form id="formEdit" data-id="<%= pets.id %>">
+    <input
+      type="text"
+      class="form-control my-2"
+      name="name"
+      id="name"
+      value="<%= pets.name %>"
+    />
+    <input
+      type="text"
+      class="form-control my-2"
+      name="description"
+      id="description"
+      value="<%= pets.description %>"
+    />
+    <button class="btn btn-warning w-100" type="submit">Edit</button>
+  </form>
+  <hr>
+  <button class="btn btn-danger btn-sm mt-5" id="btndelete" data-id="<%= pets.id %>">
+    Delete
+  </button>
+  <% } %>
+</div>
+
+<%- include("template/footer") %>
+
+<script>
+  const btndelete = document.getElementById("btndelete");
+
+  btndelete.addEventListener("click", async () => {
+    const id = btndelete.dataset.id;
+    console.log(id);
+    try {
+      const data = await fetch(`/api/pets/${id}`, {
+        method: "delete",
+      });
+      const res = await data.json();
+      console.log(res);
+
+      if (res.status) {
+        window.location.href = "/api/pets";
+      } else {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  const formEdit = document.getElementById("formEdit")
+
+  formEdit.addEventListener("submit", async(e) => {
+    e.preventDefault()
+    const id = formEdit.dataset.id
+    console.log(id)
+
+    const name = document.getElementById("name").value
+    const description = document.getElementById("description").value
+
+    try {
+      const data = await fetch(`/api/pets/${id}`, {
+        method: "put",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({name, description})
+      })
+      const res = await data.json()
+      console.log(res)
+      if (res.status) {
+        window.location.href = "/api/pets";
+      } else {
+        console.log(res)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  })
+
+
+
+
+
+</script>

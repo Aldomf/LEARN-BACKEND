@@ -1,0 +1,30 @@
+<%- include("template/header", {tituloWeb: "pets"}) %>
+
+<div class="container">
+  <h1>Veterinary Aldo</h1>
+  <a class="btn btn-success w-100 my-2" type="submit" href="/api/pets/create">Create new pet</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (arrayPets.length > 0) { %>
+         <% arrayPets.forEach(pets => { %>
+      <tr>
+        <th scope="row"><%= pets.id %></th>
+        <td><%= pets.name %></td>
+        <td><%= pets.description %></td>
+        <td><a href="pets/<%= pets.id %>" class="btn btn-warning btn-sm">Edit</a></td>
+      </tr>
+      <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("template/footer") %>
